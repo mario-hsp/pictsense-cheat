@@ -59,6 +59,7 @@ await (async function init() {
 	})()
 
 	// UI変更
+	if (document.getElementById('suggestlist') !== undefined) document.getElementById('suggestlist').remove()
 	const suggestList = document.createElement('ul')
 	suggestList.id = 'suggestList'
 	document.getElementById('userListField').appendChild(suggestList)
