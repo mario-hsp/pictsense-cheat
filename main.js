@@ -1,6 +1,6 @@
-let wordList
+var wordList
 
-await (async function init() {
+async function init() {
 	// jQuery読み込み
 	let script = document.createElement('script')
 	script.setAttribute('src','//code.jquery.com/jquery-1.10.2.js')
@@ -59,7 +59,6 @@ await (async function init() {
 	})()
 
 	// UI変更
-	if (document.getElementById('suggestlist') !== undefined) document.getElementById('suggestlist').remove()
 	const suggestList = document.createElement('ul')
 	suggestList.id = 'suggestList'
 	document.getElementById('userListField').appendChild(suggestList)
@@ -72,7 +71,8 @@ await (async function init() {
 		'border': 'solid 1px #aaa',
 		'overflow': 'hidden auto'
 	})
-})()
+}
+await init()
 
 async function displaySuggestions() {
 	// 候補単語取得
@@ -145,13 +145,16 @@ async function displaySuggestions() {
 }
 
 (function main() {
-	const observer = new MutationObserver(async () => {
-		await displaySuggestions()
-	})
-	observer.observe(document.getElementById('chatMessage'), {
-		childList: true
-	})
-})()
+	// 候補表示
+	(() =>{
+		const observer = new MutationObserver(async () => {
+			await displaySuggestions()
+		});
+		observer.observe(document.getElementById('chatMessage'), {
+			childList: true
+		});
+	})();
+})();
 
 
 function sendAnswer(answer) {
